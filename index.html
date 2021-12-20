@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CRM</title>
+  <link rel="stylesheet" href="./css/normalize.css">
+  <link rel="stylesheet" href="./css/style.css">
+  <script defer src="./main.js"></script>
+</head>
+
+<body>
+  <header class="header">
+    <div class=" container header__wrap">
+      <img class="header__logo" src="./images/logo.svg" alt="Лого">
+      <form class="header__form">
+        <input class="header__input" type="text" placeholder="Введите запрос">
+      </form>
+    </div>
+  </header>
+  <main>
+    <section class="hero">
+      <div class="container">
+        <table class="table"></table>
+        <button class="btn btn__client">Добавить клиента</button>
+        <div class="modal modal__new" id="ModalNew">
+          <div class="modal__content-new">
+            <h2 class="modal__title">Новый клиент</h2>
+            <span class="modal__error"></span>
+            <form class="modal__form">
+              <label class="modal__label-new label-surname" for="surname">Фамилия <span class="modal__elem">*</span></label>
+              <input class="modal__input modal-surname" id="surname" type="text">
+              <label class="modal__label-new label-name" for="name">Имя <span class="modal__elem">*</span></label>
+              <input class="modal__input modal-name" id="name" type="text">
+              <input class="modal__input modal-lastname" type="text" placeholder="Отчество">
+            </form>
+            <div class="modal__wrap">
+              <button class="btn modal__add">Добавить контакт</button>
+              <button class="btn modal__save modal-btn">Сохранить</button>
+              <a class="menu__cancell" href="#">Отмена</a>
+            </div>
+            <div class="menu__close">
+              <span class="menu__close-span close1"></span>
+              <span class="menu__close-span close2"></span>
+            </div>
+
+          </div>
+        </div>
+        <div class="modal modal__delete">
+          <div class="modal__content-delete">
+            <h2 class="modal__title">Удалить клиента</h2>
+            <p class="modal__text">Вы действительно хотите удалить данного клиента?</p>
+            <button class="btn modal__btn-delete modal-btn ">Удалить</button>
+            <a class="menu__cancell" href="#">Отмена</a>
+            <div class="menu__close">
+              <span class="menu__close-span close1"></span>
+              <span class="menu__close-span close2"></span>
+            </div>
+          </div>
+        </div>
+        <div class="modal modal__change">
+          <div class="modal__content-change">
+            <h2 class="modal__title">Изменить данные</h2>
+            <span class="modal__id"></span>
+            <span class="modal__error"></span>
+            <form class="modal__form">
+              <label class="modal__label">Фамилия <span class="modal__elem">*</span></label>
+              <input class="modal__input modal-surname" type="text" placeholder="Фамилия*">
+              <label class="modal__label">Имя <span class="modal__elem">*</span></label>
+              <input class="modal__input modal-name" type="text" placeholder="Имя*">
+              <label class="modal__label">Отчество</label>
+              <input class="modal__input modal-lastname" type="text" placeholder="Отчество">
+            </form>
+            <div class="modal__wrap">
+              <button class="btn modal__add">Добавить контакт</button>
+              <button class="btn modal__save modal-btn">Сохранить</button>
+              <button class="modal__change-btn modal__btn-delete">Удалить клиента</button>
+            </div>
+            <div class="menu__close">
+              <span class="menu__close-span close1"></span>
+              <span class="menu__close-span close2"></span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+
+</html>
