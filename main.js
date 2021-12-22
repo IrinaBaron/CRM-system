@@ -505,7 +505,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function deleteStudent(id, elem) {
-    console.log(id);
 
     elem.remove();
     fetch(`http://localhost:3000/api/clients/${id}`, {
@@ -635,7 +634,6 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelector('.modal__change .modal-name').value = elem.name;
         document.querySelector('.modal__change .modal-lastname').value = elem.lastName;
         if (elem.contacts.length != '0') {
-          console.log(elem.contacts)
           for (let i = 0; i < elem.contacts.length; i++) {
             let type = elem.contacts[i].type;
             let value = elem.contacts[i].value;
