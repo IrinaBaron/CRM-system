@@ -396,7 +396,7 @@ document.addEventListener('DOMContentLoaded', () => {
       list.append(btnIcons);
       btnIcons.addEventListener('click', e => {
         e.preventDefault();
-        console.log(list.querySelector('.tooltip__icon:first-child'))
+        
         list.querySelector('.tooltip__icon:first-child').style.marginBottom = '7px';
         icons.forEach(ic => {
           ic.classList.remove('visible')
