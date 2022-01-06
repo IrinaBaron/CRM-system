@@ -39,15 +39,18 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   // createStudentsList(students);
 
+  // Получение списка клиентов
   async function getStudentsList() {
     const response1 = await fetch(`http://localhost:3000/api/clients`);
     currentList = await response1.json();
 
     createTable(currentList);
+    createAutocompletion(currentList);
     return console.log(currentList);
   };
   getStudentsList();
 
+  // Создание шапки таблицы
   function createHeadTable() {
 
     let tr = document.createElement('tr');
@@ -96,6 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   createHeadTable()
 
+  // Создание таблицы
   function createTable(lists) {
 
     for (let list of lists) {
@@ -174,6 +178,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelector('.modal-surname').addEventListener('input', createLabel);
   document.querySelector('.modal-name').addEventListener('input', createLabel);
 
+  // Создание декоративных элементов в модальном окне 
   function createLabel(e) {
     
     if (e.target.value != '') {
@@ -201,6 +206,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  // Валидация при создании нового клиента
   function validate() {
     let valueSurname = surnameInput.value.trim();
     let valueName = nameInput.value.trim();
@@ -286,6 +292,7 @@ document.addEventListener('DOMContentLoaded', () => {
     getStudentsList();
   })
 
+  // Создание нового клиента
   async function createNewStudent(valueSurname, valueName, valueLastname, contacts) {
 
     const response = await fetch(`http://localhost:3000/api/clients`, {
@@ -306,6 +313,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   }
 
+  // Создание иконок с контактами клиента
   function madeIconsTooltip(listContacts, list) {
 
     for (let i = 0; i < listContacts.length; i++) {
@@ -409,6 +417,7 @@ document.addEventListener('DOMContentLoaded', () => {
   btnModal.addEventListener('click', clickModal);
   document.addEventListener('click', closeModal);
 
+  // Работа с модальными окнами
   function clickModal(e) {
     e.preventDefault();
     const modalNew = document.querySelector('.modal__new');
@@ -490,6 +499,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  // Удаление клиента
   function clickDelete(e) {
     document.querySelector('.modal__delete').classList.add('modal_active');
     document.body.classList.add('active');
@@ -520,6 +530,7 @@ document.addEventListener('DOMContentLoaded', () => {
   btnAddContact.addEventListener('click', createContactForm);
   btnChangeAdd.addEventListener('click', createContactForm);
 
+  // Создание формы с контактами
   function createContactForm(contacts, type, value) {
     clickDelSum++;
 
@@ -620,6 +631,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   let contacts = [];
 
+  // Создание формы при изменении данных клиента
   async function createChangedForm(e) {
     const response2 = await fetch(`http://localhost:3000/api/clients`);
     let listChange = await response2.json();
@@ -649,6 +661,7 @@ document.addEventListener('DOMContentLoaded', () => {
     })
   }
 
+  // Изменение клиента
   async function changeClient(id, valueSurname, valueName, valueLastname, contacts) {
     fetch(`http://localhost:3000/api/clients/${id}`, {
       method: 'PATCH',
@@ -668,6 +681,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   }
 
+  // Валидация при изменении клиента
   function validateChange(id) {
 
     let valueSurname = surnameChange.value.trim();
@@ -739,6 +753,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.classList.remove('active');
   })
 
+  // Очищение таблицы
   function cleanTable() {
     let list = document.querySelectorAll('.table__row');
     if (list.length) {
@@ -749,7 +764,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  let switching = false
+  // Сортировка и фильтрация
+  let switching = false;
   function sorted(students) {
     let ths = document.querySelectorAll('.head-click');
 
@@ -879,4 +895,41 @@ document.addEventListener('DOMContentLoaded', () => {
     return
   }
 
+  // Автодополнение при поиске
+  function createAutocompletion(list) {
+    let inputSearch = document.querySelector('.header__input');
+    let ul = document.createElement('ul');
+    ul.classList.add('header__list');
+    document.querySelector('.header__form').appendChild(ul);
+    let matches;
+    
+    inputSearch.addEventListener('input', function () {
+      ul.innerHTML = '';
+      let value = inputSearch.value.trim()[0].toUpperCase() + inputSearch.value.trim().slice(1).toLowerCase();
+      if(this.value !== '') {
+        
+        list.forEach( (item => {
+          item.surname = `${item.surname} ${item.name} ${item.lastName}`;
+          item.name = '';
+          item.lastName = '';
+
+          matches = filterSearch(list, 'surname', value) ;
+        }))
+        
+        if(matches.length > 0) {
+          for(let match of matches) {
+            let li = document.createElement('li');
+            li.classList.add('header__item');
+            li.innerHTML = match.surname + ' ' + match.name + ' ' + match.lastName;
+            ul.appendChild(li);
+
+            li.addEventListener('click', function() {
+              inputSearch.value = this.innerHTML;
+              ul.innerHTML = '';
+            })
+          }
+        }
+      }
+    })
+  }
 })
