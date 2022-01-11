@@ -177,11 +177,11 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelector('.modal__label-new ').addEventListener('click', createLabel);
   document.querySelector('.modal-surname').addEventListener('input', createLabel);
   document.querySelector('.modal-name').addEventListener('input', createLabel);
+  document.querySelector('.modal__form').addEventListener('input', createLabel);
 
   // Создание декоративных элементов в модальном окне 
   function createLabel(e) {
-    
-    if (e.target.value != '') {
+    if (e.target != '') {
       if (this.closest('.modal-surname')) {
         document.querySelector('.label-surname').innerHTML = '';
       }
